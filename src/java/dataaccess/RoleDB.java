@@ -8,7 +8,9 @@ package dataaccess;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import javax.persistence.EntityManager;
 import models.Role;
+import models.User;
 
 /**
  *
@@ -16,27 +18,13 @@ import models.Role;
  */
 public class RoleDB {
     public Role get(int role_id) throws Exception {
-        Role role = null;
-        ConnectionPool cp = ConnectionPool.getInstance();
-        Connection con = cp.getConnection();
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        String sql = "SELECT * FROM role WHERE role_id=?";
-        
+        EntityManager em = DBUtil.getEmfactory().createEntityManager();
+
         try {
-            ps = con.prepareStatement(sql);
-            ps.setInt(1, role_id);
-            rs = ps.executeQuery();
-            if (rs.next()) {
-                String role_name = rs.getString(2);
-                role = new Role(role_id, role_name);
-            }
+            Role role = em.find(Role.class, role_id);
+            return role;
         } finally {
-            DBUtil.closeResultSet(rs);
-            DBUtil.closePreparedStatement(ps);
-            cp.freeConnection(con);
-        }
-        
-        return role;
+            em.close();
+        }   
     }
 }
