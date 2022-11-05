@@ -33,7 +33,7 @@
                             <td>${user.email}</td>
                             <td>${user.firstName}</td>
                             <td>${user.lastName}</td>
-                            <td>${user.role.role_name}</td>
+                            <td>${user.role.roleName}</td>
                             <td><a href="<c:url value="user"><c:param name="action" value="edit" /><c:param name="email" value="${user.email}" /></c:url>">Edit</a></td>
                             <td><a href="<c:url value="user"><c:param name="action" value="delete" /><c:param name="email" value="${user.email}" /></c:url>">Delete</a></td>
                         </tr>
@@ -64,8 +64,8 @@
                 Last name: <input type="text" name="lastname" value="${selectedUser.lastName}"><br>
                 Password: <input type="password" name="password" value=""><br>
                 Role: <select name="role" value="role">
-                    <option value="1" <c:if test="${selectedUser.role.role_id eq 1}">selected</c:if> >system admin</option>
-                    <option value="2" <c:if test="${selectedUser.role.role_id eq 2}">selected</c:if> >regular user</option>
+                    <option value="1" <c:if test="${selectedUser.role.roleId eq 1}">selected</c:if> >system admin</option>
+                    <option value="2" <c:if test="${selectedUser.role.roleId eq 2}">selected</c:if> >regular user</option>
                 </select><br>
                 <input type="hidden" name="action" value="update">
                 <input type="submit" value="Update">

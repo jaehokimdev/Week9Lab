@@ -89,6 +89,7 @@ public class UserServlet extends HttpServlet {
         String password = request.getParameter("password");
         String selectedrole = request.getParameter("role");
         
+        User user = new User();
         Role role = new Role();
         try {
             role = rs.get(Integer.parseInt(selectedrole));
@@ -103,18 +104,22 @@ public class UserServlet extends HttpServlet {
                         request.setAttribute("error", "All fields are required");
                         break;
                     }
-                    us.add(email, firstname, lastname, password, role);
+                    user = new User(email, firstname, lastname, password);
+                    user.setRole(role);
+                    us.add(user);
                     break;
                 case "update":
                     HttpSession session = request.getSession();
                     String selEmail = (String) session.getAttribute("selEmail");
                     if (firstname.isEmpty() || lastname.isEmpty() || password.isEmpty()) {
                         request.setAttribute("error", "All fields are required");
-                        User user = us.get(selEmail);
+                        user = us.get(selEmail);
                         request.setAttribute("selectedUser", user);
                         break;
                     }
-                    us.update(selEmail, firstname, lastname, password, role);
+                    user = new User(selEmail, firstname, lastname, password);
+                    user.setRole(role);
+                    us.update(user);
                     break;
                 case "cancel":
                     request.setAttribute("selectedUser", null);

@@ -27,22 +27,19 @@ public class UserService {
         return user;
     }
     
-    public void add(String email, String firstName, String lastName, String password, Role role) throws Exception {
-        User user = new User(email, firstName, lastName, password, role);
+    public void add(User user) throws Exception {
         UserDB userDB = new UserDB();
         userDB.add(user);
     }
     
-    public void update(String email, String firstName, String lastName, String password, Role role) throws Exception {
-        User user = new User(email, firstName, lastName, password, role);
+    public void update(User user) throws Exception {
         UserDB userDB = new UserDB();
         userDB.update(user);
     }
     
     public void delete(String email) throws Exception {
-        User user = new User();
-        user.setEmail(email);
         UserDB userDB = new UserDB();
+        User user = get(email);
         userDB.delete(user);
     }
     
